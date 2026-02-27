@@ -1,0 +1,2 @@
+"""Paper digest package."""
+

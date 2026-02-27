@@ -1,0 +1,57 @@
+sources:
+  arxiv:
+    enabled: true
+    max_results: 120
+  pubmed:
+    enabled: true
+    retmax: 200
+
+filters:
+  keywords:
+    - "GLP-1"
+    - "GLP-1 receptor agonist"
+    - "tirzepatide"
+    - "semaglutide"
+    - "obesity"
+    - "weight loss"
+    - "metabolic syndrome"
+    - "insulin resistance"
+    - "type 2 diabetes"
+    - "diabetic kidney disease"
+    - "diabetic nephropathy"
+    - "albuminuria"
+    - "kidney fibrosis"
+    - "renal tubular injury"
+    - "TGF-beta"
+    - "AKT"
+    - "cathepsin L"
+    - "CTSL"
+    - "lysosome"
+    - "autophagy"
+    - "NASH"
+    - "MASH"
+    - "THR-beta"
+    - "thyroid hormone receptor beta"
+    - "VK2809"
+    - "lipid metabolism"
+    - "LNP"
+    - "lipid nanoparticle"
+    - "in vivo gene editing"
+    - "prime editing"
+    - "base editing"
+    - "pegRNA"
+    - "mRNA delivery"
+    - "liver targeting"
+    - "digital health"
+    - "diet intervention"
+    - "personalized nutrition"
+  include_journals: []
+  exclude_keywords: []
+
+output:
+  dir: "output"
+  filename_prefix: "digest"
+
+state:
+  seen_index_path: "state/seen_ids.json"
+  retention_days: 365
