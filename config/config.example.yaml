@@ -1,7 +1,4 @@
 sources:
-  arxiv:
-    enabled: true
-    max_results: 120
   pubmed:
     enabled: true
     retmax: 200
@@ -11,15 +8,30 @@ filters:
     - "large language model"
     - "medical imaging"
     - "genomics"
-  include_journals: []
-  exclude_keywords:
-    - "protocol"
-    - "retracted"
+  journal_groups:
+    - name: "综合顶刊"
+      journals:
+        - "Nature"
+        - "Science"
+        - "Cell"
+        - name: "NEJM"
+          aliases:
+            - "The New England Journal of Medicine"
+            - "N Engl J Med"
+    - name: "AI 医疗/数字医学重点期刊"
+      journals:
+        - "npj Digital Medicine"
+        - "Radiology"
+        - name: "JAMIA"
+          aliases:
+            - "Journal of the American Medical Informatics Association"
+            - "J Am Med Inform Assoc"
 
 output:
   dir: "output"
   filename_prefix: "digest"
 
 state:
+  enable_dedup: false
   seen_index_path: "state/seen_ids.json"
   retention_days: 365

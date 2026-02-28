@@ -1,57 +1,92 @@
 sources:
-  arxiv:
-    enabled: true
-    max_results: 120
   pubmed:
     enabled: true
-    retmax: 200
+    retmax: 400
 
 filters:
   keywords:
-    - "GLP-1"
-    - "GLP-1 receptor agonist"
-    - "tirzepatide"
-    - "semaglutide"
+    # Metabolism
+    - "metabolism"
+    - "metabolic"
     - "obesity"
-    - "weight loss"
-    - "metabolic syndrome"
     - "insulin resistance"
     - "type 2 diabetes"
-    - "diabetic kidney disease"
-    - "diabetic nephropathy"
-    - "albuminuria"
-    - "kidney fibrosis"
-    - "renal tubular injury"
-    - "TGF-beta"
-    - "AKT"
-    - "cathepsin L"
-    - "CTSL"
-    - "lysosome"
-    - "autophagy"
+    - "GLP-1"
+    - "semaglutide"
+    - "tirzepatide"
+    - "NAFLD"
     - "NASH"
     - "MASH"
-    - "THR-beta"
-    - "thyroid hormone receptor beta"
-    - "VK2809"
-    - "lipid metabolism"
-    - "LNP"
-    - "lipid nanoparticle"
-    - "in vivo gene editing"
-    - "prime editing"
-    - "base editing"
-    - "pegRNA"
-    - "mRNA delivery"
-    - "liver targeting"
-    - "digital health"
-    - "diet intervention"
-    - "personalized nutrition"
-  include_journals: []
-  exclude_keywords: []
+    - "fatty liver"
+    # AI for healthcare
+    - "artificial intelligence"
+    - "machine learning"
+    - "deep learning"
+    - "foundation model"
+    - "large language model"
+    - "clinical decision support"
+    - "medical imaging AI"
+    - "risk prediction model"
+    - "electronic health record"
+
+  journal_groups:
+    - name: "综合顶刊"
+      journals:
+        - "Nature"
+        - "Science"
+        - "Cell"
+        - name: "NEJM"
+          aliases:
+            - "The New England Journal of Medicine"
+            - "New England Journal of Medicine"
+            - "N Engl J Med"
+        - "The Lancet"
+        - "JAMA"
+        - "BMJ"
+        - name: "PNAS"
+          aliases:
+            - "Proceedings of the National Academy of Sciences of the United States of America"
+        - "Nature Medicine"
+        - "Nature Biotechnology"
+        - "Nature Metabolism"
+        - "Nature Communications"
+        - "Science Translational Medicine"
+        - "Cell Metabolism"
+
+    - name: "代谢/内分泌/肥胖与并发症方向重点期刊"
+      journals:
+        - "Diabetes"
+        - "Diabetologia"
+        - "Diabetes Care"
+        - "Endocrine Reviews"
+        - name: "The Journal of Clinical Endocrinology & Metabolism"
+          aliases:
+            - "Journal of Clinical Endocrinology and Metabolism"
+            - "J Clin Endocrinol Metab"
+        - "Gut"
+        - "Hepatology"
+        - "Gastroenterology"
+        - "Circulation"
+        - "Circulation Research"
+        - "Kidney International"
+
+    - name: "AI 医疗/数字医学重点期刊"
+      journals:
+        - "Nature Machine Intelligence"
+        - "Nature Digital Medicine"
+        - "npj Digital Medicine"
+        - "Radiology"
+        - "Medical Image Analysis"
+        - name: "JAMIA"
+          aliases:
+            - "Journal of the American Medical Informatics Association"
+            - "J Am Med Inform Assoc"
 
 output:
   dir: "output"
   filename_prefix: "digest"
 
 state:
+  enable_dedup: false
   seen_index_path: "state/seen_ids.json"
   retention_days: 365

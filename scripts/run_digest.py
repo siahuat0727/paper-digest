@@ -22,8 +22,12 @@ def main() -> int:
     print(f"Candidates: {result.total_candidates}")
     print(f"After filters: {result.total_filtered}")
     print(f"New papers: {result.total_new}")
+    print(f"Dedup enabled: {result.dedup_enabled}")
     print(f"Digest written: {result.output_path}")
-    print(f"State written: {result.state_path}")
+    if result.state_path is not None:
+        print(f"State written: {result.state_path}")
+    else:
+        print("State written: skipped (dedup disabled)")
     return 0
 
 

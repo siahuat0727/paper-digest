@@ -2,31 +2,29 @@ from __future__ import annotations
 
 import re
 
+from paper_digest.config import JournalGroupConfig
+from paper_digest.journals import build_alias_mapping, normalize_journal_name
 from paper_digest.models import Paper
 
 
 def apply_filters(
     papers: list[Paper],
     keywords: list[str],
-    include_journals: list[str],
-    exclude_keywords: list[str],
+    journal_groups: list[JournalGroupConfig],
 ) -> list[Paper]:
-    include_journals_lower = {j.lower().strip() for j in include_journals if j.strip()}
-    exclude_keywords_lower = [k.lower().strip() for k in exclude_keywords if k.strip()]
+    journal_aliases = set(build_alias_mapping(journal_groups).keys())
     keyword_list = [k.strip() for k in keywords if k.strip()]
 
     result: list[Paper] = []
     for paper in papers:
-        if include_journals_lower:
-            journal = (paper.journal or "").lower().strip()
-            if not journal:
+        if journal_aliases:
+            journal_key = normalize_journal_name(paper.journal or "")
+            if not journal_key:
                 continue
-            if journal not in include_journals_lower:
+            if journal_key not in journal_aliases:
                 continue
 
         full_text = f"{paper.title} {paper.abstract}".lower()
-        if any(ex_kw in full_text for ex_kw in exclude_keywords_lower):
-            continue
 
         matched = [kw for kw in keyword_list if kw.lower() in full_text]
         if keyword_list and not matched:
