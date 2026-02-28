@@ -1,9 +1,9 @@
 # 论文周报
 
 - 时间范围：2026-02-21 ~ 2026-02-28
-- 收录数量（Filter前 -> Filter后）：380 -> 12
+- 收录数量（Filter前 -> Filter后）：380 -> 14
 - 目标大类数量：3
-- 目标期刊数量：31
+- 目标期刊数量：30
 
 ## 综合顶刊（7 -> 6）
 
@@ -117,7 +117,7 @@
 
 - 本期无命中
 
-## 代谢/内分泌/肥胖与并发症方向重点期刊（3 -> 2）
+## 代谢/内分泌/肥胖与并发症方向重点期刊（5 -> 4）
 
 ### Diabetes（0 -> 0）
 
@@ -135,9 +135,27 @@
 
 - 本期无命中
 
-### The Journal of Clinical Endocrinology & Metabolism（0 -> 0）
+### The Journal of Clinical Endocrinology & Metabolism（2 -> 2）
 
-- 本期无命中
+#### 1. Adverse effect of obesity and dysglycemia on bone microarchitecture and strength in youth: sex-related differences.
+
+- 来源：PubMed
+- 日期：2026-02-28
+- 作者：Fida Bacha, Pranav K Saha, Reina Armamento-Villareal, Roman J Shypailo, Maurice Puyau, Xiaoliu Zhang
+- 链接：[https://pubmed.ncbi.nlm.nih.gov/41761663/](https://pubmed.ncbi.nlm.nih.gov/41761663/)
+- 命中关键词：metabolism, obesity, insulin resistance, type 2 diabetes
+- 摘要原文：The relationship between obesity, type 2 diabetes (T2D), and bone health in youth is not clear. Objective; To examine the relationship of adiposity and glucose metabolism with bone mineral content (BMC) and quality (microarchitecture and strength) in youth across the glycemia spectrum, and evaluate sex-related differences. Cross-sectional study. Research Center. 92 adolescents (56 females); 32% normal weight (NW), 29% overweight-normal glucose tolerance (OW-NGT), 39% OW-impaired glucose regulation (OW-IGR), including prediabetes (n=9) or T2D (n=27). Bone quality (HRpQCT), body composition and BMC (DXA), anthropometrics, OGTT with glucose and insulin indices, vitamin D and calcium metabolism. BMC and distal tibia bone microarchitecture and strength (modulus) measures were worse in OW-IGR and OW-NGT compared with NW in males but not in females. In multivariable models, accounting for age, Tanner stage and sex, age and lean mass (β=3.9, p<0.001) positively, while height (β=-4.5, p<0.001) and HOMA-IR (β=-4.6, p=0.005) negatively contributed to the variance in tibial volumetric BMD (vBMD) (R2=0.45, p<0.001). Similar relationships were found with radial vBMD and with whole bone modulus at the tibia and radius independent of sex. Fasting glucose was inversely related to trabecular thickness at the tibia and radius. There is a negative relationship between adiposity and insulin resistance with bone microarchitecture and strength in youth after accounting for age, sex, height and lean mass. There appears to be sexual dimorphism in these relationships, with more negative effect of adiposity and dysglycemia on bone quality in males.
+- 中文导读：该研究与「metabolism、obesity、insulin resistance、type 2 diabetes」相关。
+
+#### 2. Association of genetic risk and physical activity with incident type 2 diabetes.
+
+- 来源：PubMed
+- 日期：2026-02-27
+- 作者：Xuan Zhou, Germán D Carrasquilla, Malene R Christiansen, Roelof A J Smit, Lars Ängquist, Torben Hansen, et al.
+- 链接：[https://pubmed.ncbi.nlm.nih.gov/41761698/](https://pubmed.ncbi.nlm.nih.gov/41761698/)
+- 命中关键词：type 2 diabetes, electronic health record
+- 摘要原文：To assess whether daily step counts and genetic risk interact to influence the risk of developing type 2 diabetes. We analyzed data from 9,501 participants in the All of Us Research Program with both genetic and wearable device-derived physical activity data and without diabetes at baseline and median age of 56 years (42-66). Physical activity was quantified using daily step counts. Genetic risk was assessed using a global polygenic score. Incident type 2 diabetes was identified using electronic health record-linked diagnostic codes. Multivariable Cox proportional hazards models estimated hazard ratios (HRs) for type 2 diabetes across genetic risk and physical activity levels. We tested for additive interaction using the relative excess risk due to interaction (RERI). In secondary analyses we used physical-activity intensity measures using wearable-derived and self-reported intensity levels. Type 2 diabetes incidence rates ranged from 4.1 per 1,000 person-years (95% CI, 2.5-5.7) in individuals with high physical activity and low genetic risk to 18.4 (95% CI, 15.2-21.6) in those with low physical activity and high genetic risk (HR, 6.2 (95% CI: 3.97, 9.6)). A significant additive interaction was observed (RERI, 0.20; 95% CI, 0.04-0.36; P = .007), with 15% (95% CI, 2-27) of excess risk attributed to the interaction. Similar interaction patterns were found using device-based intensity metrics and self-reported physical activity measures. These findings provide evidence of additive interactions between genetic risk and physical activity, underscoring the potential value of integrating genomic and device-derived data to identify individuals who would more likely benefit from increasing physical activity.
+- 中文导读：该研究与「type 2 diabetes、electronic health record」相关。
 
 ### Gut（1 -> 1）
 
@@ -182,10 +200,6 @@
 ## AI 医疗/数字医学重点期刊（4 -> 4）
 
 ### Nature Machine Intelligence（0 -> 0）
-
-- 本期无命中
-
-### Nature Digital Medicine（0 -> 0）
 
 - 本期无命中
 
