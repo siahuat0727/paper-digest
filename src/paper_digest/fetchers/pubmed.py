@@ -27,43 +27,41 @@ def fetch_pubmed(
     if not ids:
         return []
 
-    xml_text = _fetch_details(ids)
-    root = ET.fromstring(xml_text)
-
     papers: list[Paper] = []
-    for article in root.findall(".//PubmedArticle"):
-        medline = article.find("MedlineCitation")
-        if medline is None:
-            continue
-        article_node = medline.find("Article")
-        if article_node is None:
-            continue
+    for root in _fetch_details_roots(ids):
+        for article in root.findall(".//PubmedArticle"):
+            medline = article.find("MedlineCitation")
+            if medline is None:
+                continue
+            article_node = medline.find("Article")
+            if article_node is None:
+                continue
 
-        pmid = _text_or_empty(medline.find("PMID"))
-        title = _node_text(article_node.find("ArticleTitle")).replace("\n", " ").strip()
-        abstract = _extract_abstract(article_node)
-        journal = _extract_journal(article_node)
-        published_at = _extract_published_at(article_node)
-        if not published_at:
-            continue
-        if not (start_date <= published_at <= end_date):
-            continue
+            pmid = _text_or_empty(medline.find("PMID"))
+            title = _node_text(article_node.find("ArticleTitle")).replace("\n", " ").strip()
+            abstract = _extract_abstract(article_node)
+            journal = _extract_journal(article_node)
+            published_at = _extract_published_at(article_node)
+            if not published_at:
+                continue
+            if not (start_date <= published_at <= end_date):
+                continue
 
-        url = f"https://pubmed.ncbi.nlm.nih.gov/{pmid}/" if pmid else ""
-        authors = _extract_authors(article_node)
+            url = f"https://pubmed.ncbi.nlm.nih.gov/{pmid}/" if pmid else ""
+            authors = _extract_authors(article_node)
 
-        papers.append(
-            Paper(
-                source="PubMed",
-                source_id=pmid or title,
-                title=title,
-                abstract=abstract,
-                url=url,
-                published_at=published_at,
-                authors=authors,
-                journal=journal or None,
+            papers.append(
+                Paper(
+                    source="PubMed",
+                    source_id=pmid or title,
+                    title=title,
+                    abstract=abstract,
+                    url=url,
+                    published_at=published_at,
+                    authors=authors,
+                    journal=journal or None,
+                )
             )
-        )
 
     return papers
 
@@ -91,15 +89,19 @@ def _search_ids(
     return data.get("esearchresult", {}).get("idlist", [])
 
 
-def _fetch_details(ids: list[str]) -> str:
-    params = {
-        "db": "pubmed",
-        "id": ",".join(ids),
-        "retmode": "xml",
-    }
-    resp = requests.get(PUBMED_EFETCH, params=params, timeout=30, headers=DEFAULT_HEADERS)
-    resp.raise_for_status()
-    return resp.text
+def _fetch_details_roots(ids: list[str], batch_size: int = 120) -> list[ET.Element]:
+    roots: list[ET.Element] = []
+    for i in range(0, len(ids), batch_size):
+        batch = ids[i : i + batch_size]
+        payload = {
+            "db": "pubmed",
+            "id": ",".join(batch),
+            "retmode": "xml",
+        }
+        resp = requests.post(PUBMED_EFETCH, data=payload, timeout=30, headers=DEFAULT_HEADERS)
+        resp.raise_for_status()
+        roots.append(ET.fromstring(resp.text))
+    return roots
 
 
 def _extract_abstract(article_node: ET.Element) -> str:
