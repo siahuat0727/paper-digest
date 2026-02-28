@@ -12,6 +12,10 @@ def render_digest_markdown(
     window_start: datetime,
     window_end: datetime,
     journal_groups: list[JournalGroupConfig] | None = None,
+    total_before_filter: int | None = None,
+    total_after_filter: int | None = None,
+    journal_counts_before_filter: dict[str, dict[str, int]] | None = None,
+    journal_counts_after_filter: dict[str, dict[str, int]] | None = None,
 ) -> str:
     configured_groups = [g for g in (journal_groups or []) if g.journals]
     configured_journal_count = sum(len(group.journals) for group in configured_groups)
@@ -19,7 +23,10 @@ def render_digest_markdown(
     lines.append("# 论文周报")
     lines.append("")
     lines.append(f"- 时间范围：{window_start.date()} ~ {window_end.date()}")
-    lines.append(f"- 收录数量：{len(papers)}")
+    if total_before_filter is not None and total_after_filter is not None:
+        lines.append(f"- 收录数量（Filter前 -> Filter后）：{total_before_filter} -> {total_after_filter}")
+    else:
+        lines.append(f"- 收录数量：{len(papers)}")
     if configured_groups:
         lines.append(f"- 目标大类数量：{len(configured_groups)}")
         lines.append(f"- 目标期刊数量：{configured_journal_count}")
@@ -34,13 +41,32 @@ def render_digest_markdown(
         grouped = _group_by_journal_groups(papers, configured_groups)
         for group in configured_groups:
             group_data = grouped[group.name]
-            group_total = sum(len(group_data[journal.name]) for journal in group.journals)
-            lines.append(f"## {group.name}（{group_total}）")
+            group_before_count = (
+                sum(journal_counts_before_filter.get(group.name, {}).get(journal.name, 0) for journal in group.journals)
+                if journal_counts_before_filter
+                else sum(len(group_data[journal.name]) for journal in group.journals)
+            )
+            group_after_count = (
+                sum(journal_counts_after_filter.get(group.name, {}).get(journal.name, 0) for journal in group.journals)
+                if journal_counts_after_filter
+                else sum(len(group_data[journal.name]) for journal in group.journals)
+            )
+            lines.append(f"## {group.name}（{group_before_count} -> {group_after_count}）")
             lines.append("")
 
             for journal in group.journals:
                 journal_papers = group_data[journal.name]
-                lines.append(f"### {journal.name}（{len(journal_papers)}）")
+                before_count = (
+                    journal_counts_before_filter.get(group.name, {}).get(journal.name, 0)
+                    if journal_counts_before_filter
+                    else len(journal_papers)
+                )
+                after_count = (
+                    journal_counts_after_filter.get(group.name, {}).get(journal.name, len(journal_papers))
+                    if journal_counts_after_filter
+                    else len(journal_papers)
+                )
+                lines.append(f"### {journal.name}（{before_count} -> {after_count}）")
                 lines.append("")
                 if not journal_papers:
                     lines.append("- 本期无命中")
@@ -59,20 +85,7 @@ def render_digest_markdown(
 
 def build_cn_summary(paper: Paper) -> str:
     focus = "、".join(paper.matched_keywords) if paper.matched_keywords else "未显式标注关键词"
-    sentence = _first_sentence(paper.abstract)
-    if sentence:
-        return f"该研究与「{focus}」相关。原文要点：{sentence}"
-    return f"该研究与「{focus}」相关。摘要原文缺失。"
-
-
-def _first_sentence(text: str) -> str:
-    raw = " ".join(text.split())
-    if not raw:
-        return ""
-    for sep in [". ", "! ", "? ", "。", "；", ";"]:
-        if sep in raw:
-            return raw.split(sep)[0].strip()[:260]
-    return raw[:260]
+    return f"该研究与「{focus}」相关。"
 
 
 def _group_by_journal_groups(
@@ -123,5 +136,10 @@ def _append_paper_block(
         lines.append("- 链接：无")
     if paper.matched_keywords:
         lines.append(f"- 命中关键词：{', '.join(paper.matched_keywords)}")
+    abstract = " ".join(paper.abstract.split())
+    if abstract:
+        lines.append(f"- 摘要原文：{abstract}")
+    else:
+        lines.append("- 摘要原文：缺失")
     lines.append(f"- 中文导读：{build_cn_summary(paper)}")
     lines.append("")

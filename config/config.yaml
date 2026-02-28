@@ -40,7 +40,9 @@ filters:
             - "The New England Journal of Medicine"
             - "New England Journal of Medicine"
             - "N Engl J Med"
-        - "The Lancet"
+        - name: "The Lancet"
+          aliases:
+            - "Lancet"
         - "JAMA"
         - "BMJ"
         - name: "PNAS"
@@ -61,6 +63,7 @@ filters:
         - "Endocrine Reviews"
         - name: "The Journal of Clinical Endocrinology & Metabolism"
           aliases:
+            - "The Journal of Clinical Endocrinology and Metabolism"
             - "Journal of Clinical Endocrinology and Metabolism"
             - "J Clin Endocrinol Metab"
         - "Gut"
@@ -73,7 +76,6 @@ filters:
     - name: "AI 医疗/数字医学重点期刊"
       journals:
         - "Nature Machine Intelligence"
-        - "Nature Digital Medicine"
         - "npj Digital Medicine"
         - "Radiology"
         - "Medical Image Analysis"

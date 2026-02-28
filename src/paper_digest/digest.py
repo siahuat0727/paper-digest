@@ -7,6 +7,7 @@ from pathlib import Path
 from paper_digest.config import AppConfig
 from paper_digest.fetchers.pubmed import fetch_pubmed
 from paper_digest.filtering import apply_filters, normalize_title
+from paper_digest.journals import count_papers_by_group_journal
 from paper_digest.markdown import render_digest_markdown
 from paper_digest.models import Paper
 from paper_digest.state import SeenState, load_state, prune_state, save_state
@@ -43,6 +44,8 @@ def run_digest(config: AppConfig, days: int = 7, now: datetime | None = None) ->
         keywords=config.filters.keywords,
         journal_groups=config.filters.journal_groups,
     )
+    journal_counts_before_filter = count_papers_by_group_journal(candidates, config.filters.journal_groups)
+    journal_counts_after_filter = count_papers_by_group_journal(filtered, config.filters.journal_groups)
 
     state_path: Path | None = None
     if config.state.enable_dedup:
@@ -63,6 +66,10 @@ def run_digest(config: AppConfig, days: int = 7, now: datetime | None = None) ->
         window_start=window_start,
         window_end=window_end,
         journal_groups=config.filters.journal_groups,
+        total_before_filter=len(candidates),
+        total_after_filter=len(filtered),
+        journal_counts_before_filter=journal_counts_before_filter,
+        journal_counts_after_filter=journal_counts_after_filter,
     )
     output_path.write_text(markdown, encoding="utf-8")
 
